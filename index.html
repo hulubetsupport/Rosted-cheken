@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Chicken Roast - Hulu Bet</title>
+  <style>
+    :root {
+      --bg-world: #22273d;
+      --road-color: #272c44;
+      --road-line: #6b7596;
+      --paver-dark: #1e2235;
+      --tunnel-bg: #161825;
+      --panel-bg: #272a3d;
+      --card-bg: #202334;
+      --chip-bg: #353b53;
+      --chip-border: #444b68;
+      --text-white: #ffffff;
+      --text-dim: #9aa5c4;
+      --green-main: #27c357;
+      --green-shadow: #1da347;
+      --yellow-main: #f5b026;
+      --yellow-shadow: #d49315;
+      --coin-blue: #0ea5e9;
+      --coin-dark-blue: #0284c7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    }
+
+    body {
+      background: #0f111a;
+      color: var(--text-white);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    #game-app {
+      width: 100%;
+      max-width: 480px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background: var(--bg-world);
+      overflow: hidden;
+    }
+
+    /* ==========================================================================
+       HEADER & TOP BAR
+       ========================================================================== */
+    header {
+      height: 48px;
+      background: #1b1e2e;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      z-index: 50;
+      border-bottom: 1px solid #141724;
+      flex-shrink: 0;
+    }
+
+    .logo-box {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .logo-flame {
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 0.95;
+    }
+    .logo-title {
+      font-size: 0.85rem;
+      font-weight: 900;
+      letter-spacing: -0.3px;
+      color: #ffffff;
+    }
+    .logo-subtitle {
+      font-size: 0.88rem;
+      font-weight: 900;
+      letter-spacing: -0.3px;
+      color: #ffffff;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .balance-pill {
+      background: #2b3149;
+      border-radius: 8px;
+      padding: 5px 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: #ffffff;
+    }
+    .coin-badge {
+      width: 17px;
+      height: 17px;
+      background: linear-gradient(135deg, #38bdf8, #0284c7);
+      color: #ffffff;
+      border-radius: 50%;
+      font-size: 0.52rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      letter-spacing: -0.4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .menu-btn {
+      background: transparent;
+      border: none;
+      color: #c5ccdf;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+    }
+
+    /* Live Feed Ticker */
+    .live-feed-bar {
+      position: absolute;
+      top: 54px;
+      left: 12px;
+      z-index: 40;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      pointer-events: none;
+    }
+    .live-stats {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #7983a5;
+    }
+    .online-indicator {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: #8c97be;
+    }
+    .green-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22c55e;
+      display: inline-block;
+      box-shadow: 0 0 6px rgba(34, 197, 94, 0.8);
+    }
+    .player-pill {
+      background: rgba(22, 25, 41, 0.75);
+      backdrop-filter: blur(4px);
+      border-radius: 20px;
+      padding: 3px 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .player-avatar {
+      width: 18px;
+      height: 18px;
+      background: #ef4444;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .player-name {
+      color: #dbe2f4;
+      font-size: 0.76rem;
+    }
+    .player-win-val {
+      color: #22c55e;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    /* ==========================================================================
+       SETTINGS MODAL (Screenshot 1 & 2)
+       ========================================================================== */
+    #settings-modal {
+      position: absolute;
+      top: 52px;
+      right: 12px;
+      width: 250px;
+      background: #2b3046;
+      border-radius: 14px;
+      border: 1px solid #3d4463;
+      box-shadow: 0 12px 35px rgba(0,0,0,0.65);
+      z-index: 100;
+      display: none;
+      flex-direction: column;
+      padding: 14px;
+      gap: 12px;
+    }
+    #settings-modal.open {
+      display: flex;
+    }
+    .modal-user-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 6px;
+    }
+    .modal-user-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .modal-user-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-user-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffffff;
+      max-width: 90px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .modal-change-avatar {
+      font-size: 0.72rem;
+      color: #8c97be;
+      cursor: pointer;
+    }
+    .modal-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+    .modal-toggle-label {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .ios-switch {
+      width: 38px;
+      height: 20px;
+      background: #475569;
+      border-radius: 20px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .ios-switch.on {
+      background: #ffffff;
+    }
+    .ios-knob {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      background: #ffffff;
+      border-radius: 50%;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+    .ios-switch.on .ios-knob {
+      transform: translateX(18px);
+      background: #22c55e;
+    }
+    .modal-nav-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #d1d5db;
+      padding-top: 4px;
+      border-top: 1px solid #39405d;
+      cursor: pointer;
+    }
+    .powered-by-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding-top: 8px;
+      border-top: 1px solid #39405d;
+      font-size: 0.72rem;
+      color: #8c97be;
+    }
+    .inout-badge {
+      display: inline-flex;
+      font-weight: 900;
+      font-size: 0.8rem;
+      letter-spacing: -0.5px;
+    }
+    .inout-in { color: #f59e0b; font-style: italic; }
+    .inout-out { color: #ffffff; }
+
+    /* ==========================================================================
+       WORLD & TRACK (ROAD, SEWER GRATES, MULTIPLIERS, TUNNEL)
+       ========================================================================== */
+    #world-viewport {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-world);
+    }
+    #world-viewport.shake {
+      animation: viewportShake 0.4s ease-out;
+    }
+    @keyframes viewportShake {
+      0%, 100% { transform: translate(0, 0); }
+      20% { transform: translate(-7px, 5px); }
+      40% { transform: translate(7px, -5px); }
+      60% { transform: translate(-5px, 3px); }
+      80% { transform: translate(5px, -3px); }
+    }
+
+    #world-track {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      transition: transform 0.42s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* Tunnel start area */
+    .tunnel-area {
+      width: 130px;
+      height: 100%;
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      padding-bottom: 8px;
+    }
+    .tunnel-arch {
+      position: absolute;
+      bottom: 12px;
+      left: 18px;
+      width: 96px;
+      height: 260px;
+      background: var(--tunnel-bg);
+      border-radius: 54px 54px 0 0;
+      border: 4px solid #2e354e;
+      box-shadow: inset 0 8px 24px rgba(0,0,0,0.85);
+      z-index: 2;
+    }
+
+    /* Pavers in background */
+    .road-paver {
+      position: absolute;
+      background: var(--paver-dark);
+      border-radius: 8px;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
+    /* Road Lanes */
+    .lane {
+      width: 140px;
+      height: 100%;
+      position: relative;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border-right: 3px dashed rgba(166, 178, 212, 0.4);
+    }
+
+    /* Arched Sewer Grills at lane bottom */
+    .sewer-grate {
+      position: absolute;
+      bottom: 8px;
+      width: 104px;
+      height: 82px;
+      background: #2a2f48;
+      border-radius: 46px 46px 0 0;
+      border: 3px solid #3d4566;
+      box-shadow: inset 0 -4px 10px rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: space-evenly;
+      align-items: flex-end;
+      padding: 0 10px 4px;
+      overflow: hidden;
+      z-index: 2;
+    }
+    .grate-slit {
+      width: 9px;
+      height: 60px;
+      background: #141726;
+      border-radius: 5px 5px 0 0;
+      position: relative;
+    }
+
+    /* Fire Eruption inside Grate */
+    .fire-erupt {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 140px;
+      pointer-events: none;
+      z-index: 15;
+      display: none;
+    }
+    .fire-erupt.active {
+      display: block;
+      animation: flameSurge 0.5s ease-out forwards;
+    }
+    @keyframes flameSurge {
+      0% { transform: translateX(-50%) scaleY(0.1); opacity: 0; }
+      40% { transform: translateX(-50%) scaleY(1.3); opacity: 1; }
+      100% { transform: translateX(-50%) scaleY(1); opacity: 0.95; }
+    }
+
+    /* Circular Multiplier Discs (Floor Buttons) */
+    .multiplier-disc {
+      position: absolute;
+      top: 36%;
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #384266 0%, #262c44 80%);
+      border: 4px solid #4a5682;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.28s ease;
+      z-index: 3;
+    }
+    .disc-inner-ring {
+      position: absolute;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 2px solid #505c87;
+      pointer-events: none;
+    }
+    .disc-value {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #c2d0f0;
+      letter-spacing: -0.3px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+      z-index: 4;
+    }
+
+    /* Passed / Lit Up Green Disc */
+    .multiplier-disc.passed {
+      background: radial-gradient(circle, #10b981 0%, #059669 85%);
+      border-color: #34d399;
+      box-shadow: 0 0 24px rgba(16, 185, 129, 0.7), inset 0 2px 6px rgba(255,255,255,0.4);
+    }
+    .multiplier-disc.passed .disc-inner-ring {
+      border-color: #a7f3d0;
+    }
+    .multiplier-disc.passed .disc-value {
+      color: #ffffff;
+      text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+    }
+
+    /* Chicken Entity */
+    #chicken {
+      position: absolute;
+      bottom: 24px;
+      left: 65px;
+      width: 82px;
+      height: 82px;
+      z-index: 20;
+      transform: translate(-50%, 0);
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: left 0.38s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .chicken-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,0.5));
+      transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    /* Parabolic Jump Arc */
+    .jumping .chicken-img {
+      animation: roastJump 0.38s ease-in-out forwards;
+    }
+    @keyframes roastJump {
+      0% { transform: translateY(0) scale(1, 0.94); }
+      40% { transform: translateY(-56px) scale(0.92, 1.12); }
+      80% { transform: translateY(-4px) scale(1.06, 0.95); }
+      100% { transform: translateY(0) scale(1, 1); }
+    }
+
+    /* Roasted Chicken Effect */
+    .chicken-roasted .chicken-img {
+      transform: scale(0.85) rotate(22deg) translateY(10px);
+      filter: brightness(0.25) sepia(1) hue-rotate(-30deg) saturate(5) drop-shadow(0 0 16px #f97316);
+    }
+
+    /* Win Popup (Exact to Screenshot 3) */
+    #win-modal {
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.7);
+      background: #242940;
+      border: 1px solid #3e476c;
+      border-radius: 18px;
+      padding: 16px 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.7);
+      z-index: 80;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    #win-modal.show {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
+    .win-header-title {
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: #ffffff;
+      letter-spacing: 0.5px;
+      margin-bottom: 2px;
+    }
+    .win-mult-sub {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #f59e0b;
+      margin-bottom: 6px;
+    }
+    .win-cash-val {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #22c55e;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: absolute;
+      top: 56px;
+      right: 12px;
+      background: #ef4444;
+      color: #fff;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+      z-index: 120;
+      transform: translateY(-20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.25s ease;
+    }
+    #toast.show {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ==========================================================================
+       BOTTOM CONTROL PANEL (Exact to Screenshots 1-6)
+       ========================================================================== */
+    #control-panel {
+      background: var(--panel-bg);
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      padding: 14px 14px 20px;
+      box-shadow: 0 -8px 24px rgba(0,0,0,0.5);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    /* Stepper row */
+    .stepper-row {
+      background: var(--card-bg);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 44px;
+      padding: 3px 6px;
+    }
+    .step-btn {
+      background: #2b3047;
+      border: none;
+      color: #9aa4c4;
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 7px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .step-btn:active {
+      background: #39405d;
+    }
+    .bet-input-box {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 1.25rem;
+      text-align: center;
+      width: 120px;
+      outline: none;
+    }
+
+    /* Chips row */
+    .chips-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+    .chip-btn {
+      background: var(--chip-bg);
+      border: 1px solid var(--chip-border);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.88rem;
+      padding: 8px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+    .chip-btn:active {
+      background: #444b68;
+    }
+
+    /* Difficulty Dropdown Container */
+    .dropdown-container {
+      position: relative;
+    }
+    .dropdown-trigger {
+      background: var(--card-bg);
+      border: 1px solid #353c58;
+      border-radius: 10px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: #e2e8f0;
+      cursor: pointer;
+    }
+    .dropdown-arrow {
+      width: 14px;
+      height: 14px;
+      stroke: #9aa5c4;
+      transition: transform 0.2s;
+    }
+    .dropdown-container.open .dropdown-arrow {
+      transform: rotate(180deg);
+    }
+    .dropdown-menu {
+      position: absolute;
+      bottom: 50px;
+      left: 0;
+      right: 0;
+      background: #2b3048;
+      border: 1px solid #3d4566;
+      border-radius: 10px;
+      overflow: hidden;
+      display: none;
+      flex-direction: column;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.65);
+      z-index: 70;
+    }
+    .dropdown-container.open .dropdown-menu {
+      display: flex;
+    }
+    .dropdown-item {
+      padding: 12px 16px;
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      border-bottom: 1px solid #353b58;
+    }
+    .dropdown-item:last-child {
+      border-bottom: none;
+    }
+    .dropdown-item:active {
+      background: #394160;
+    }
+    .dropdown-item.active {
+      color: #ffffff;
+    }
+
+    /* Action Buttons Row */
+    .actions-row {
+      position: relative;
+      height: 54px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-refresh {
+      width: 54px;
+      height: 100%;
+      background: #353b53;
+      border: 1px solid #444b68;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c5ccdf;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .btn-refresh:active {
+      background: #444b68;
+    }
+
+    .btn-play {
+      flex: 1;
+      height: 100%;
+      border-radius: 12px;
+      border: none;
+      background: var(--green-main);
+      color: #ffffff;
+      font-size: 1.35rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 4px 0 var(--green-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.05s ease;
+    }
+    .btn-play:active {
+      transform: translateY(2px);
+    }
+
+    .ingame-btns-box {
+      display: none;
+      width: 100%;
+      height: 100%;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .btn-cashout {
+      height: 100%;
+      background: var(--yellow-main);
+      color: #171717;
+      border-radius: 12px;
+      border: none;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 4px 0 var(--yellow-shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.15;
+    }
+    .btn-cashout-text {
+      font-size: 0.92rem;
+      letter-spacing: 0.3px;
+    }
+    .btn-cashout-val {
+      font-size: 1.05rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .btn-go {
+      height: 100%;
+      background: var(--green-main);
+      color: #ffffff;
+      border-radius: 12px;
+      border: none;
+      font-size: 1.45rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 4px 0 var(--green-shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .btn-go:active, .btn-cashout:active {
+      transform: translateY(2px);
+    }
+
+    .btn-disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<div id="game-app">
+  <!-- Top Bar -->
+  <header>
+    <div class="logo-box">
+      <!-- Flame SVG Icon -->
+      <div class="logo-flame">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none">
+          <path d="M12 2C10 5.5 13 8 11 11C9.5 9 8.5 7.5 9 4C5.5 7.5 5 13 8 17C9 18.5 10.5 19.5 12 19.5C13.5 19.5 15 18.5 16 17C19 13 18.5 7.5 15 4C15.5 7.5 14.5 9 13 11C11 8 14 5.5 12 2Z" fill="url(#flame-grad)"/>
+          <defs>
+            <linearGradient id="flame-grad" x1="12" y1="2" x2="12" y2="19.5" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#f59e0b"/>
+              <stop offset="1" stop-color="#ef4444"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-title">CHICKEN</span>
+        <span class="logo-subtitle">ROAST</span>
+      </div>
+    </div>
+
+    <div class="header-right">
+      <div class="balance-pill">
+        <span id="bal-text">0.00</span>
+        <div class="coin-badge">Br</div>
+      </div>
+
+      <!-- Hamburger Menu Button -->
+      <button class="menu-btn" title="Menu" onclick="toggleSettingsModal()">
+        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Live Win & Online Users Ticker (Screenshot 1-6) -->
+  <div class="live-feed-bar">
+    <div class="live-stats">
+      <span>Live wins</span>
+      <div class="online-indicator">
+        <span class="green-dot"></span>
+        <span>Online: 2</span>
+      </div>
+    </div>
+    <div class="player-pill">
+      <div class="player-avatar">
+        <svg viewBox="0 0 24 24" width="12" height="12" fill="#ffffff">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+      </div>
+      <span class="player-name">distraught frog</span>
+      <div class="player-win-val">
+        <div class="coin-badge" style="width:13px; height:13px; font-size:0.42rem;">Br</div>
+        <span id="ticker-win-amount">3.87</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Menu Modal (Screenshot 1 & 2) -->
+  <div id="settings-modal">
+    <div class="modal-user-row">
+      <div class="modal-user-info">
+        <div class="modal-user-avatar">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="#1e293b">
+            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          </svg>
+        </div>
+        <span class="modal-user-name" id="user-display-name">distraught f...</span>
+      </div>
+      <span class="modal-change-avatar">Change avatar</span>
+    </div>
+
+    <!-- Sound Toggle -->
+    <div class="modal-toggle-row">
+      <div class="modal-toggle-label">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+        </svg>
+        Sound
+      </div>
+      <div class="ios-switch on" id="sound-switch" onclick="toggleSound()">
+        <div class="ios-knob"></div>
+      </div>
+    </div>
+
+    <!-- Music Toggle -->
+    <div class="modal-toggle-row">
+      <div class="modal-toggle-label">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 18V5l12-2v13"/>
+          <circle cx="6" cy="18" r="3"/>
+          <circle cx="18" cy="16" r="3"/>
+        </svg>
+        Music
+      </div>
+      <div class="ios-switch on" id="music-switch" onclick="toggleMusic()">
+        <div class="ios-knob"></div>
+      </div>
+    </div>
+
+    <!-- Bet History -->
+    <div class="modal-nav-row">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="12 6 12 12 16 14"/>
+      </svg>
+      Bet History
+    </div>
+
+    <!-- Powered by InOut -->
+    <div class="powered-by-row">
+      Powered by <span class="inout-badge"><span class="inout-in">iN</span><span class="inout-out">OUT</span></span>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="8" x2="12" y2="12"/>
+      <line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    <span id="toast-msg">Insufficient funds</span>
+  </div>
+
+  <!-- Game Canvas / World Viewport -->
+  <div id="world-viewport">
+    <!-- Win Popup (Screenshot 3) -->
+    <div id="win-modal">
+      <div class="win-header-title">WIN!</div>
+      <div class="win-mult-sub" id="win-mult-text">x1.50</div>
+      <div class="win-cash-val">
+        <span id="win-cash-text">+3.00</span>
+        <div class="coin-badge" style="width:16px; height:16px; font-size:0.5rem;">Br</div>
+      </div>
+    </div>
+
+    <!-- Scrolling Track with Lanes and Tunnel -->
+    <div id="world-track">
+      <!-- Tunnel Start Area -->
+      <div class="tunnel-area">
+        <div class="tunnel-arch"></div>
+        <div class="road-paver" style="width:50px; height:24px; top:120px; left:16px;"></div>
+        <div class="road-paver" style="width:42px; height:20px; top:280px; left:30px;"></div>
+      </div>
+
+      <!-- Generated Lanes Box -->
+      <div id="lanes-box" style="display:flex;"></div>
+
+      <!-- Chicken Entity -->
+      <div id="chicken">
+        <img src="https://i.postimg.cc/FzfP0m6N/20260930-163717.png" alt="Chicken" class="chicken-img" id="chicken-sprite">
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Control Panel -->
+  <div id="control-panel">
+    <!-- Stepper Row -->
+    <div class="stepper-row">
+      <button class="step-btn" onclick="setBet('MIN')">MIN</button>
+      <input type="number" id="bet-input" class="bet-input-box" value="2" min="1" max="1000" step="1">
+      <button class="step-btn" onclick="setBet('MAX')">MAX</button>
+    </div>
+
+    <!-- Quick Bet Chips -->
+    <div class="chips-row">
+      <button class="chip-btn" onclick="setQuickBet(4)">4 <div class="coin-badge">Br</div></button>
+      <button class="chip-btn" onclick="setQuickBet(8)">8 <div class="coin-badge">Br</div></button>
+      <button class="chip-btn" onclick="setQuickBet(12)">12 <div class="coin-badge">Br</div></button>
+      <button class="chip-btn" onclick="setQuickBet(20)">20 <div class="coin-badge">Br</div></button>
+    </div>
+
+    <!-- Difficulty Selector Dropdown (Screenshot 2) -->
+    <div class="dropdown-container" id="diff-container">
+      <div class="dropdown-trigger" onclick="toggleDropdown()">
+        <span id="diff-label">Easy</span>
+        <svg class="dropdown-arrow" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </div>
+      <div class="dropdown-menu">
+        <div class="dropdown-item active" onclick="selectDifficulty('Easy')">
+          <span>Easy</span>
+          <svg class="check-svg" width="16" height="16" viewBox="0 0 24 24" stroke="#22c55e" stroke-width="3" fill="none"><path d="M4 12l5 5L20 6"/></svg>
+        </div>
+        <div class="dropdown-item" onclick="selectDifficulty('Medium')">
+          <span>Medium</span>
+          <svg class="check-svg" width="16" height="16" viewBox="0 0 24 24" stroke="#22c55e" stroke-width="3" fill="none" style="display:none;"><path d="M4 12l5 5L20 6"/></svg>
+        </div>
+        <div class="dropdown-item" onclick="selectDifficulty('Hard')">
+          <span>Hard</span>
+          <svg class="check-svg" width="16" height="16" viewBox="0 0 24 24" stroke="#22c55e" stroke-width="3" fill="none" style="display:none;"><path d="M4 12l5 5L20 6"/></svg>
+        </div>
+        <div class="dropdown-item" onclick="selectDifficulty('Extreme')">
+          <span>Extreme</span>
+          <svg class="check-svg" width="16" height="16" viewBox="0 0 24 24" stroke="#22c55e" stroke-width="3" fill="none" style="display:none;"><path d="M4 12l5 5L20 6"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons Row -->
+    <div class="actions-row">
+      <button class="btn-refresh" title="Auto">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+        </svg>
+      </button>
+
+      <button id="btn-play" class="btn-play" onclick="handlePlayClick()">Play</button>
+
+      <!-- In-game controls (Screenshot 4 & 5) -->
+      <div id="ingame-btns" class="ingame-btns-box">
+        <button id="btn-cashout" class="btn-cashout" onclick="handleCashOut()">
+          <span class="btn-cashout-text">CASH OUT</span>
+          <span class="btn-cashout-val">
+            <span id="cashout-val-num">0.00</span>
+            <div class="coin-badge" style="width:14px; height:14px; font-size:0.45rem;">Br</div>
+          </span>
+        </button>
+        <button id="btn-go" class="btn-go" onclick="handleGoStep()">GO</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ==========================================================================
+   1. MANDATORY INTEGRATION BOILERPLATE
+   ========================================================================== */
+const API = "https://hulubet-server.onrender.com";
+let INIT_DATA = "", serverBalance = 0, ready = false;
+
+async function api(path, opts = {}) {
+  try {
+    const r = await fetch(API + path, {
+      ...opts,
+      headers: {
+        'Content-Type': 'application/json',
+        'x-telegram-init-data': INIT_DATA
+      }
+    });
+    return await r.json();
+  } catch (e) {
+    return { success: false, message: 'Connection problem' };
+  }
+}
+const postParent = m => { try { parent.postMessage(m, '*'); } catch (e) {} };
+
+addEventListener('message', e => {
+  if (e.source !== parent) return;
+  const d = e.data || {};
+  if (d.type === 'INIT' && d.initData) {
+    INIT_DATA = d.initData;
+    ready = true;
+    refreshBalance();
+  }
+  if (d.type === 'UPDATE_BALANCE') refreshBalance();
+});
+postParent({ type: 'GAME_READY' });
+
+async function refreshBalance() {
+  const d = await api('/api/user/init');
+  if (d.success) {
+    serverBalance = d.balance;
+    showBalance();
+    if (d.user && d.user.username) {
+      document.getElementById('user-display-name').textContent = d.user.username;
+    }
+  }
+}
+function showBalance() {
+  document.getElementById('bal-text').textContent = Number(serverBalance).toFixed(2);
+  postParent({ type: 'BALANCE_UPDATE', newBalance: serverBalance });
+}
+
+/* ==========================================================================
+   2. PROCEDURAL SOUND SYNTHESIS (WEB AUDIO)
+   ========================================================================== */
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+let soundEnabled = true;
+let musicEnabled = true;
+
+function playTone(freq, type = 'sine', duration = 0.1, gainVal = 0.2) {
+  if (!soundEnabled) return;
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  const osc = audioCtx.createOscillator();
+  const gain = audioCtx.createGain();
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+  gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+  gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.start();
+  osc.stop(audioCtx.currentTime + duration);
+}
+
+const soundHop = () => {
+  if (!soundEnabled) return;
+  playTone(520, 'sine', 0.08, 0.25);
+  setTimeout(() => playTone(680, 'sine', 0.09, 0.2), 45);
+};
+
+const soundWin = () => {
+  if (!soundEnabled) return;
+  [523.25, 659.25, 783.99, 1046.50].forEach((freq, idx) => {
+    setTimeout(() => playTone(freq, 'triangle', 0.22, 0.25), idx * 80);
+  });
+};
+
+const soundRoast = () => {
+  if (!soundEnabled) return;
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  const now = audioCtx.currentTime;
+
+  // Roaring Fire Noise Blast
+  const bufferSize = audioCtx.sampleRate * 0.8;
+  const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+  const data = buffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    data[i] = Math.random() * 2 - 1;
+  }
+  const noise = audioCtx.createBufferSource();
+  noise.buffer = buffer;
+
+  const filter = audioCtx.createBiquadFilter();
+  filter.type = 'lowpass';
+  filter.frequency.setValueAtTime(900, now);
+  filter.frequency.exponentialRampToValueAtTime(200, now + 0.8);
+
+  const noiseGain = audioCtx.createGain();
+  noiseGain.gain.setValueAtTime(0.4, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+
+  noise.connect(filter);
+  filter.connect(noiseGain);
+  noiseGain.connect(audioCtx.destination);
+  noise.start(now);
+
+  // Alarmed Chicken Sizzle Squawk
+  const squawk = audioCtx.createOscillator();
+  const squawkGain = audioCtx.createGain();
+  squawk.type = 'sawtooth';
+  squawk.frequency.setValueAtTime(950, now);
+  squawk.frequency.exponentialRampToValueAtTime(280, now + 0.5);
+
+  squawkGain.gain.setValueAtTime(0.3, now);
+  squawkGain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+
+  squawk.connect(squawkGain);
+  squawkGain.connect(audioCtx.destination);
+  squawk.start(now);
+  squawk.stop(now + 0.5);
+};
+
+/* ==========================================================================
+   3. MULTIPLIERS PER DIFFICULTY (SCREENSHOTS 1, 4, 6)
+   ========================================================================== */
+const MULTIPLIERS = {
+  Easy:    [1.01, 1.04, 1.08, 1.13, 1.20, 1.26, 1.33, 1.42, 1.50, 1.62, 1.78, 2.05],
+  Medium:  [1.09, 1.25, 1.45, 1.70, 2.05, 2.50, 3.20, 4.30, 6.00, 9.50, 15.0, 25.0],
+  Hard:    [1.20, 1.55, 2.10, 3.00, 4.60, 7.50, 14.0, 28.0, 60.0, 140.0],
+  Extreme: [1.44, 2.30, 4.20, 8.50, 20.0, 55.0, 160.0, 450.0]
+};
+
+let currentDifficulty = 'Easy';
+let activeRound = null;
+let currentStepIndex = 0; // 0 = start inside tunnel, 1 = lane 0
+
+/* ==========================================================================
+   4. WORLD GENERATION
+   ========================================================================== */
+function buildTrack() {
+  const lanesBox = document.getElementById('lanes-box');
+  lanesBox.innerHTML = '';
+  const mults = MULTIPLIERS[currentDifficulty];
+
+  mults.forEach((m, idx) => {
+    const laneDiv = document.createElement('div');
+    laneDiv.className = 'lane';
+    laneDiv.id = `lane-${idx}`;
+
+    // Decorative floor pavers
+    const paverY1 = (idx * 57) % 180 + 30;
+    const paverY2 = ((idx + 2) * 73) % 240 + 60;
+
+    laneDiv.innerHTML = `
+      <div class="road-paver" style="width:48px; height:24px; top:${paverY1}px; left:12px;"></div>
+      <div class="road-paver" style="width:38px; height:18px; top:${paverY2}px; right:14px;"></div>
+
+      <div class="multiplier-disc" id="disc-${idx}">
+        <div class="disc-inner-ring"></div>
+        <div class="disc-value">${m.toFixed(2)}x</div>
+      </div>
+
+      <div class="sewer-grate" id="grate-${idx}">
+        <div class="grate-slit"></div>
+        <div class="grate-slit"></div>
+        <div class="grate-slit"></div>
+        <div class="grate-slit"></div>
+        <div class="grate-slit"></div>
+      </div>
+
+      <div class="fire-erupt" id="fire-${idx}">
+        <svg viewBox="0 0 100 120" width="100%" height="100%">
+          <path d="M50 0 C40 30 10 40 10 80 C10 105 30 120 50 120 C70 120 90 105 90 80 C90 40 60 30 50 0 Z" fill="#ef4444" opacity="0.9"/>
+          <path d="M50 25 C43 45 22 55 22 85 C22 105 35 115 50 115 C65 115 78 105 78 85 C78 55 57 45 50 25 Z" fill="#f97316"/>
+          <path d="M50 50 C46 65 35 75 35 92 C35 105 42 110 50 110 C58 110 65 105 65 92 C65 75 54 65 50 50 Z" fill="#fde047"/>
+        </svg>
+      </div>
+    `;
+    lanesBox.appendChild(laneDiv);
+  });
+}
+
+function updateCameraFollow(targetX) {
+  const viewport = document.getElementById('world-viewport');
+  const track = document.getElementById('world-track');
+  const vpWidth = viewport.clientWidth;
+  const scrollOffset = Math.max(0, targetX - vpWidth * 0.42);
+  track.style.transform = `translateX(-${scrollOffset}px)`;
+}
+
+function resetChickenPosition() {
+  const chicken = document.getElementById('chicken');
+  chicken.style.left = '65px';
+  chicken.style.bottom = '24px';
+  chicken.classList.remove('jumping', 'chicken-roasted');
+
+  updateCameraFollow(65);
+  document.getElementById('win-modal').classList.remove('show');
+
+  document.querySelectorAll('.multiplier-disc').forEach(d => d.classList.remove('passed'));
+  document.querySelectorAll('.fire-erupt').forEach(f => f.classList.remove('active'));
+}
+
+function hopChickenToLane(laneIdx, onComplete) {
+  const chicken = document.getElementById('chicken');
+  soundHop();
+
+  chicken.classList.remove('jumping');
+  void chicken.offsetWidth; // force CSS reflow
+  chicken.classList.add('jumping');
+
+  // Exact target X within the track
+  const targetX = 130 + laneIdx * 140 + 70;
+  chicken.style.left = targetX + 'px';
+  updateCameraFollow(targetX);
+
+  setTimeout(() => {
+    if (onComplete) onComplete();
+  }, 360);
+}
+
+/* ==========================================================================
+   5. GAME ACTION LOGIC
+   ========================================================================== */
+async function handlePlayClick() {
+  if (activeRound) return;
+
+  const bet = parseFloat(document.getElementById('bet-input').value) || 0;
+  if (bet < 1 || bet > 1000) {
+    showToast("Bet must be between 1 and 1000 Br");
+    return;
+  }
+  if (bet > serverBalance) {
+    showToast("Insufficient balance");
+    postParent({ type: 'OPEN_DEPOSIT' });
+    return;
+  }
+
+  const playBtn = document.getElementById('btn-play');
+  playBtn.classList.add('btn-disabled');
+  playBtn.textContent = "Connecting...";
+
+  const res = await api('/api/bet/play', {
+    method: 'POST',
+    body: JSON.stringify({
+      gameName: "ChickenRoad2",
+      betAmount: bet,
+      clientData: { difficulty: currentDifficulty }
+    })
+  });
+
+  playBtn.classList.remove('btn-disabled');
+  playBtn.textContent = "Play";
+
+  if (!res.success) {
+    showToast(res.message || "Failed to place bet");
+    if (res.message && res.message.toLowerCase().includes("balance")) {
+      postParent({ type: 'OPEN_DEPOSIT' });
+    }
+    return;
+  }
+
+  serverBalance -= bet;
+  showBalance();
+  postParent({ type: 'BET_STARTED' });
+
+  buildTrack();
+  resetChickenPosition();
+
+  activeRound = {
+    betAmount: bet,
+    isWin: res.isWin,
+    payout: res.payout,
+    multiplier: res.multiplier,
+    newBalance: res.newBalance,
+    maxSafeStep: (res.visualOutcome && typeof res.visualOutcome.maxSafeStep === 'number')
+                   ? res.visualOutcome.maxSafeStep
+                   : (res.isWin ? MULTIPLIERS[currentDifficulty].length : 0)
+  };
+
+  currentStepIndex = 0;
+
+  // Toggle UI controls to in-game mode (Screenshot 4)
+  document.getElementById('btn-play').style.display = 'none';
+  document.getElementById('ingame-btns').style.display = 'grid';
+  document.getElementById('diff-container').style.pointerEvents = 'none';
+  document.getElementById('diff-container').style.opacity = '0.7';
+
+  performStep();
+}
+
+function updateCashOutDisplay() {
+  const mults = MULTIPLIERS[currentDifficulty];
+  const curMult = mults[currentStepIndex - 1] || 1.00;
+  const currentPayout = (activeRound.betAmount * curMult).toFixed(2);
+  document.getElementById('cashout-val-num').textContent = currentPayout;
+}
+
+function handleGoStep() {
+  if (!activeRound) return;
+  performStep();
+}
+
+function performStep() {
+  const goBtn = document.getElementById('btn-go');
+  const cashBtn = document.getElementById('btn-cashout');
+  goBtn.classList.add('btn-disabled');
+  cashBtn.classList.add('btn-disabled');
+
+  const stepToExecute = currentStepIndex;
+  const mults = MULTIPLIERS[currentDifficulty];
+
+  if (stepToExecute < activeRound.maxSafeStep && stepToExecute < mults.length) {
+    // SAFE STEP
+    hopChickenToLane(stepToExecute, () => {
+      const disc = document.getElementById(`disc-${stepToExecute}`);
+      if (disc) disc.classList.add('passed');
+
+      currentStepIndex++;
+      updateCashOutDisplay();
+
+      if (currentStepIndex >= mults.length || (currentStepIndex >= activeRound.maxSafeStep && activeRound.isWin)) {
+        setTimeout(triggerWinSequence, 400);
+      } else {
+        goBtn.classList.remove('btn-disabled');
+        cashBtn.classList.remove('btn-disabled');
+      }
+    });
+
+  } else {
+    // LOSS STEP: ROAST THE CHICKEN
+    hopChickenToLane(stepToExecute, () => {
+      // Roaring flame bursts out through the sewer grate slits!
+      const fire = document.getElementById(`fire-${stepToExecute}`);
+      if (fire) fire.classList.add('active');
+
+      soundRoast();
+
+      const viewport = document.getElementById('world-viewport');
+      viewport.classList.add('shake');
+      setTimeout(() => viewport.classList.remove('shake'), 400);
+
+      const chicken = document.getElementById('chicken');
+      chicken.classList.add('chicken-roasted');
+
+      showToast("Chicken Roasted! Round Over");
+
+      setTimeout(() => {
+        finishRound(activeRound.newBalance);
+      }, 1900);
+    });
+  }
+}
+
+function handleCashOut() {
+  if (!activeRound) return;
+  if (activeRound.isWin) {
+    triggerWinSequence();
+  } else {
+    performStep();
+  }
+}
+
+function triggerWinSequence() {
+  soundWin();
+  const mults = MULTIPLIERS[currentDifficulty];
+  const achievedMult = mults[currentStepIndex - 1] || activeRound.multiplier || 1.00;
+  const winModal = document.getElementById('win-modal');
+
+  document.getElementById('win-mult-text').textContent = `x${achievedMult.toFixed(2)}`;
+  document.getElementById('win-cash-text').textContent = `+${Number(activeRound.payout).toFixed(2)}`;
+  winModal.classList.add('show');
+
+  setTimeout(() => {
+    finishRound(activeRound.newBalance);
+  }, 2200);
+}
+
+function finishRound(finalBalance) {
+  serverBalance = finalBalance;
+  showBalance();
+  postParent({ type: 'BET_ENDED' });
+
+  activeRound = null;
+  currentStepIndex = 0;
+
+  document.getElementById('btn-play').style.display = 'flex';
+  document.getElementById('ingame-btns').style.display = 'none';
+  document.getElementById('btn-go').classList.remove('btn-disabled');
+  document.getElementById('btn-cashout').classList.remove('btn-disabled');
+  document.getElementById('diff-container').style.pointerEvents = 'auto';
+  document.getElementById('diff-container').style.opacity = '1';
+
+  resetChickenPosition();
+}
+
+/* ==========================================================================
+   6. USER CONTROLS, DIFFICULTY, & MODALS
+   ========================================================================== */
+function setBet(mode) {
+  const input = document.getElementById('bet-input');
+  if (mode === 'MIN') input.value = 1;
+  if (mode === 'MAX') input.value = Math.min(1000, Math.floor(serverBalance) || 1000);
+}
+
+function setQuickBet(val) {
+  document.getElementById('bet-input').value = val;
+}
+
+function toggleDropdown() {
+  if (activeRound) return;
+  document.getElementById('diff-container').classList.toggle('open');
+}
+
+function selectDifficulty(diff) {
+  currentDifficulty = diff;
+  document.getElementById('diff-label').textContent = diff;
+
+  document.querySelectorAll('.dropdown-item').forEach(item => {
+    const isThis = item.textContent.includes(diff);
+    item.classList.toggle('active', isThis);
+    const svg = item.querySelector('.check-svg');
+    if (svg) svg.style.display = isThis ? 'block' : 'none';
+  });
+
+  document.getElementById('diff-container').classList.remove('open');
+  buildTrack();
+  resetChickenPosition();
+}
+
+function toggleSettingsModal() {
+  document.getElementById('settings-modal').classList.toggle('open');
+}
+
+function toggleSound() {
+  soundEnabled = !soundEnabled;
+  document.getElementById('sound-switch').classList.toggle('on', soundEnabled);
+}
+
+function toggleMusic() {
+  musicEnabled = !musicEnabled;
+  document.getElementById('music-switch').classList.toggle('on', musicEnabled);
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3500);
+}
+
+window.addEventListener('load', () => {
+  buildTrack();
+  resetChickenPosition();
+
+  // Close modals on outside tap
+  document.addEventListener('click', e => {
+    const modal = document.getElementById('settings-modal');
+    const menuBtn = e.target.closest('button[title="Menu"]');
+    if (!modal.contains(e.target) && !menuBtn && modal.classList.contains('open')) {
+      modal.classList.remove('open');
+    }
+    const diffContainer = document.getElementById('diff-container');
+    if (!diffContainer.contains(e.target) && diffContainer.classList.contains('open')) {
+      diffContainer.classList.remove('open');
+    }
+  });
+});
+</script>
+</body>
+</html>
